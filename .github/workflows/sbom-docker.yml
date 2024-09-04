@@ -28,25 +28,25 @@ jobs:
     - name: Install NPM dependencies
       run: npm install
 
-    # Step 6: Generate SBOM for Javascript using Anchore's SBOM Action
-    - name: Generate SBOM for Javascript
+    # Step 4: Generate SBOM for JavaScript using Anchore's SBOM Action in SPDX format
+    - name: Generate SBOM for JavaScript
       uses: anchore/sbom-action@v0
       with:
-        format: json
-        artifact-name: sbom-node-js.json
+        format: spdx-json  # Change format to SPDX JSON
+        artifact-name: sbom-node-js.spdx.json
 
     # Step 5: Build Docker image
     - name: Build Docker Image
       run: |
         docker build -t my-node-app:latest .
 
-    # Step 6: Generate SBOM for Docker image using Anchore's SBOM Action
+    # Step 6: Generate SBOM for Docker image using Anchore's SBOM Action in SPDX format
     - name: Generate SBOM for Docker image
       uses: anchore/sbom-action@v0
       with:
         image: my-node-app:latest
-        format: json
-        artifact-name: sbom-docker-image.json
+        format: spdx-json  # Change format to SPDX JSON
+        artifact-name: sbom-docker-image.spdx.json
 
     # Step 7: Upload SBOMs as artifacts
     - name: Upload SBOMs
@@ -54,5 +54,5 @@ jobs:
       with:
         name: sbom-artifacts
         path: |
-          sbom-node-js.json
-          sbom-docker-image.json
+          sbom-node-js.spdx.json
+          sbom-docker-image.spdx.json
